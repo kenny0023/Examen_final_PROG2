@@ -42,4 +42,22 @@ public class Fee {
         if (t.isAfter(deadline)) return FeeStatus.LATE;
         return FeeStatus.IN_PROGRESS;
     }
+
+    public FeeStatus getStatus(Instant instant) {
+        double totalPaid = payments.stream().mapToDouble(Payment::getAmount).sum();
+
+        if (totalPaid == 0) {
+            return FeeStatus.NULL;
+        }
+        if (totalPaid > amountDue) {
+            return FeeStatus.OVERPAID;
+        }
+        if (totalPaid == amountDue) {
+            return FeeStatus.PAID;
+        }
+        if (instant.isAfter(deadline)) {
+            return FeeStatus.LATE;
+        }
+        return FeeStatus.IN_PROGRESS;
+    }
 }
