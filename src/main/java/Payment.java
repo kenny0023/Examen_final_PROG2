@@ -11,6 +11,10 @@ public class Payment {
         this.dateTime = dateTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public double getAmount() {
         return amount;
     }
